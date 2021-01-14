@@ -11,6 +11,11 @@ let YMAX;
 let XMIN;
 let YMIN;
 
+/*let XMAXmin;
+let XMINmin;
+let YMINmin;
+let YMAXmin;*/
+
 let SQUARESIZE;
 
 let currminute;
@@ -22,6 +27,11 @@ function setup() {
 	XMIN = 20;
 	YMIN = 80;
 	YMAX = height - 30;
+
+	/*XMAXmin = width - 50;
+	XMINmin = 50;
+	YMINmin = 120;
+	YMAXmin = height - 80;*/
 
 	xhour = XMIN;
 	xmin = XMIN;
@@ -46,13 +56,15 @@ function draw() {
 	fill(0);
 	text(second(), 10, 90);*/
 
+	/*
+	//hour snake clock
 	let lastposx = xhour;
 	let lastposy = yhour;
 	for (let i = 0; i < hour(); i++)
 	{
 		let xpos;
 		let ypos;
-		if (lastposx <= XMAX + 1 && lastposy <= (YMIN + SQUARESIZE + 5))
+		if (lastposx <= XMAX + 1 && lastposy <= (YMIN + SQUARESIZE + 5) && lastposx > (XMIN + SQUARESIZE + 5))
 		{
 			xpos = lastposx - SQUARESIZE - 5;
 			ypos = YMIN;
@@ -60,22 +72,15 @@ function draw() {
 		{
 			xpos = XMAX;
 			ypos = lastposy - SQUARESIZE - 5;
-		} else if (lastposx <= XMAX && lastposx > XMIN && lastposy >= YMAX)
+		} else if (lastposy >= (YMAX - SQUARESIZE - 5) && lastposx >= XMIN)
 		{
 			xpos = lastposx + SQUARESIZE + 5;
 			ypos = YMAX;
-		} else if (lastposx <= XMIN && lastposy <= YMAX - SQUARESIZE - 5)
-		{
+		} else {
 			xpos = XMIN;
-			ypos = lastposy - SQUARESIZE - 5;
+			ypos = lastposy + SQUARESIZE + 5;
 		}
-		
-		
-		/*else if (lastposx > XMIN && lastposy >= YMAX && lastposx < XMAX - SQUARESIZE - 5)
-		{
-			xpos = lastpox + SQUARESIZE + 5;
-			ypos = YMAX;
-		}*/
+
 		square (xpos, ypos, SQUARESIZE);
 		lastposx = xpos;
 		lastposy = ypos;
@@ -83,26 +88,73 @@ function draw() {
 
 	if (xhour < XMAX && yhour <= YMIN)
 	{
-		xhour += 3;
+		xhour += 8;
 		//square(xhour, YMIN, SQUARESIZE);
 	} else if (xhour >= XMAX && yhour < YMAX)
 	{
-		yhour += 3;
+		yhour += 8;
 		//square (XMAX, yhour, SQUARESIZE);
 	} else if (xhour > XMIN && yhour >= YMAX)
 	{
-		xhour -= 3;
+		xhour -= 8;
 		//square (xhour, YMAX, SQUARESIZE);
 	} else if (xhour <= XMIN && yhour > YMIN)
 	{
-		yhour -= 3;
+		yhour -= 8;
 		//square(XMIN, yhour, SQUARESIZE);
-	}
+	}*/
 
 	if (currminute != minute())
 	{
 		currminute = minute();
 		console.log(minute());
+	}
+
+	//minute snake clock
+	let lastposx = xmin;
+	let lastposy = ymin;
+	for (let i = 0; i < hour(); i++)
+	{
+		let xpos;
+		let ypos;
+		if (lastposx <= XMAX + 1 && lastposy <= (YMIN + SQUARESIZE + 5) && lastposx > (XMIN + SQUARESIZE + 5))
+		{
+			xpos = lastposx - SQUARESIZE - 5;
+			ypos = YMIN;
+		} else if (lastposx >= (XMAX - SQUARESIZE - 5) && lastposy <= YMAX + 1)
+		{
+			xpos = XMAX;
+			ypos = lastposy - SQUARESIZE - 5;
+		} else if (lastposy >= (YMAX - SQUARESIZE - 5) && lastposx >= XMIN)
+		{
+			xpos = lastposx + SQUARESIZE + 5;
+			ypos = YMAX;
+		} else {
+			xpos = XMIN;
+			ypos = lastposy + SQUARESIZE + 5;
+		}
+
+		square (xpos, ypos, SQUARESIZE);
+		lastposx = xpos;
+		lastposy = ypos;
+	}
+
+	if (xmin < XMAX && ymin <= YMIN)
+	{
+		xmin += 8;
+		//square(xhour, YMIN, SQUARESIZE);
+	} else if (xmin >= XMAX && ymin < YMAX)
+	{
+		ymin += 8;
+		//square (XMAX, yhour, SQUARESIZE);
+	} else if (xmin > XMIN && ymin >= YMAX)
+	{
+		xmin -= 8;
+		//square (xhour, YMAX, SQUARESIZE);
+	} else if (xmin <= XMIN && ymin > YMIN)
+	{
+		ymin -= 8;
+		//square(XMIN, yhour, SQUARESIZE);
 	}
 
 	/*
