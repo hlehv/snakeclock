@@ -17,18 +17,19 @@ let currminute;
 
 function setup() {
 	createCanvas(1300,900); // make an HTML canvas element width x height pixels
-	xhour = width / 2;
-	xmin = width / 2;
-	xsec = width / 2;
-
-	yhour = 20;
-	ymin = 50;
-	ysec = 80;
 
 	XMAX = width - 30;
 	XMIN = 20;
 	YMIN = 80;
 	YMAX = height - 30;
+
+	xhour = XMIN;
+	xmin = XMIN;
+	xsec = XMIN;
+
+	yhour = YMIN;
+	ymin = YMIN;
+	ysec = YMIN;
 
 	SQUARESIZE = 17;
 
@@ -45,39 +46,58 @@ function draw() {
 	fill(0);
 	text(second(), 10, 90);*/
 
-	/*for (let i = 0; i < hour(); i++)
+	let lastposx = xhour;
+	let lastposy = yhour;
+	for (let i = 0; i < hour(); i++)
 	{
-		let xpos = (xhour - 14 * i) % width;
-		let ypos = (yhour + 14 * i) % height;
-		
-		if (xpos < XMAX && ypos <= YMIN)
+		let xpos;
+		let ypos;
+		if (lastposx <= XMAX + 1 && lastposy <= (YMIN + SQUARESIZE + 5))
 		{
-			square(xpos, 20, 10);
-		} else if (xpos >= XMAX && ypos < YMAX)
+			xpos = lastposx - SQUARESIZE - 5;
+			ypos = YMIN;
+		} else if (lastposx >= (XMAX - SQUARESIZE - 5) && lastposy <= YMAX + 1)
 		{
-			square (XMAX, ypos, 10);
-		} else if (xpos > XMIN && ypos >= YMAX)
+			xpos = XMAX;
+			ypos = lastposy - SQUARESIZE - 5;
+		} else if (lastposx <= XMAX && lastposx > XMIN && lastposy >= YMAX)
 		{
-			square (xpos, YMAX, 10);
-		} else if (xpos <= XMIN && ypos > YMIN)
+			xpos = lastposx + SQUARESIZE + 5;
+			ypos = YMAX;
+		} else if (lastposx <= XMIN && lastposy <= YMAX - SQUARESIZE - 5)
 		{
-			square(XMIN, ypos, 10);
+			xpos = XMIN;
+			ypos = lastposy - SQUARESIZE - 5;
 		}
+		
+		
+		/*else if (lastposx > XMIN && lastposy >= YMAX && lastposx < XMAX - SQUARESIZE - 5)
+		{
+			xpos = lastpox + SQUARESIZE + 5;
+			ypos = YMAX;
+		}*/
+		square (xpos, ypos, SQUARESIZE);
+		lastposx = xpos;
+		lastposy = ypos;
 	}
 
 	if (xhour < XMAX && yhour <= YMIN)
 	{
 		xhour += 3;
+		//square(xhour, YMIN, SQUARESIZE);
 	} else if (xhour >= XMAX && yhour < YMAX)
 	{
 		yhour += 3;
+		//square (XMAX, yhour, SQUARESIZE);
 	} else if (xhour > XMIN && yhour >= YMAX)
 	{
 		xhour -= 3;
+		//square (xhour, YMAX, SQUARESIZE);
 	} else if (xhour <= XMIN && yhour > YMIN)
 	{
 		yhour -= 3;
-	}*/
+		//square(XMIN, yhour, SQUARESIZE);
+	}
 
 	if (currminute != minute())
 	{
@@ -85,6 +105,7 @@ function draw() {
 		console.log(minute());
 	}
 
+	/*
 	//create the hour snake
 	fill('rgb(0,255,0)');
 	stroke('rgb(0,255,0)');
@@ -124,7 +145,7 @@ function draw() {
 	
 	for (let i = 0; i < second(); i++)
 	{
-		let xpos = (xsec - ((SQUARESIZE + 5) * i)) % width;
+		let xpos = ((xsec - ((SQUARESIZE + 5) * i)) % width);
 		square(xpos, height / 2 + 80, SQUARESIZE);
 		
 		if (xpos >= width)
@@ -133,5 +154,5 @@ function draw() {
 		}
 	}
 
-	xsec = xsec + 1;
+	xsec = xsec + 1;*/
 }
